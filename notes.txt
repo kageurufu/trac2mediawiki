@@ -1,0 +1,32 @@
+Notes
+
+Some basic notes on formatting conversions. this is gonna be interesting
+
+Formats that are the same
+-------------------------
+
+''' is bold
+'' is italics
+''''' is bold italics
+=
+==
+===
+====
+=====
+
+
+Basic formatting 
+----------------
+__underline__ -> <u>underline</u>
+{{{monospace}}} or `monospace` -> <pre>monospace</pre> (BOTH TREAT CONTENT AS NON-WIKI MARKUP!!!)
+~~strike-through~~ -> <strike>strike-through</strike>
+^superscript^ -> <sup>superscript</sup>
+,,subscript,, -> <sub>subscript</sub>
+!something -> <nowiki>something</nowiki>
+[[BR]] -> <br/>
+
+Lists suck
+----------
+ *Item			*Item
+  *Subitem		**Item
+   *subsubitem	***Item

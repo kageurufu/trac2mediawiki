@@ -1,0 +1,6 @@
+Genshi==0.7
+MySQL-python==1.2.4
+Trac==0.11
+mwclient==0.6.5
+simplejson==3.3.0
+wsgiref==0.1.2

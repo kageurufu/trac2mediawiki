@@ -8,7 +8,7 @@ parser.add_argument('--mwiki-user', type=str, help="MediaWiki Username", default
 parser.add_argument('--mwiki-pass', type=str, help="MediaWiki Password", default="")
 parser.add_argument('--mwiki-port', type=int, help="MediaWiki Port, default 80", default=80)	
 parser.add_argument('--trac-path', type=str, help="Trac installation directory", default="/home/trac/trac")
-parser.add_argument('--prefix', type=str, help="Prefix for pages imported into MediaWiki")
+parser.add_argument('--prefix', type=str, help="Prefix for pages imported into MediaWiki", default="")
 
 args = parser.parse_args()
 
@@ -28,10 +28,10 @@ tracenv = Environment(args.trac_path)
 tracdb = tracenv.get_db_cnx()
 traccur = tracdb.cursor()
 
-if args.prefix:
+if args.prefix != "":
 	args.prefix = "%s - " % args.prefix
 
-traccur.execute("select name, author, text, comment from wiki")
+traccur.execute("SELECT `name`, `author`, `text`, `comment` FROM `wiki` ORDER BY `version` ASC")
 for page in traccur:
 	newpage = {}
 	newpage['name'] = "%s%s" % (args.prefix, page[0])

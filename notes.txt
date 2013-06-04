@@ -25,8 +25,46 @@ __underline__ -> <u>underline</u>
 !something -> <nowiki>something</nowiki>
 [[BR]] -> <br/>
 
-Lists suck
+Lists suck, cant get regex working. Gonna have to work on a line by line basis.
 ----------
  *Item			*Item
   *Subitem		**Item
    *subsubitem	***Item
+
+
+
+
+Tables
+-------
+
+||Cell 1||Cell 2||Cell 3||
+||Cell 4||Cell 5||Cell 6||
+
+{|
+|-
+! Cell 1
+! Cell 2
+! Cell 3
+|- 
+| Cell 4 
+| Cell 5
+| Cell 6
+|}
+
+
+Link stuff... lets work some magic on these I guess
+
+THIS STAYS THE SAME
+ * [http://www.edgewall.com/ Edgewall Software] 
+
+ * [wiki:TitleIndex Title Index]
+ 	[[TitleIndex|Title Index]]
+
+ * [wiki:ISO9000]
+ 	[[ISO9000]]
+
+Maybe allow some sort of updating for moving this to a new system?
+ * Tickets: #1 or ticket:1
+ * Reports: {1} or report:1
+ * Changesets: r1, [1] or changeset:1
+ * ...

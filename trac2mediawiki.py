@@ -1,5 +1,6 @@
 import sys
 import argparse
+from WikiFormatter import WikiFormatter
 
 parser = argparse.ArgumentParser(description='Import content from Trac into MediaWiki')
 parser.add_argument('--mwiki-host', type=str, help="MediaWiki URL", default="localhost")
@@ -33,11 +34,16 @@ if args.prefix != "":
 
 traccur.execute("SELECT `name`, `author`, `text`, `comment` FROM `wiki` ORDER BY `version` ASC")
 for page in traccur:
+	#Format the page from Trac to MW format
+	formatter = WikiFormatter(page[2])
+
 	newpage = {}
 	newpage['name'] = "%s%s" % (args.prefix, page[0])
 	newpage['author'] = page[1]
-	newpage['text'] = page[2]
+	newpage['text'] = formatter.parse()
 	newpage['comment'] = page[3]
+	
 	#lets actually create the page now
+
 	mwsite.Pages[newpage['name']].save(newpage['text'], summary=newpage['comment'])
 	

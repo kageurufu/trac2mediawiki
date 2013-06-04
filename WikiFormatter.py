@@ -11,6 +11,7 @@ class WikiFormatter:
 		"strikethrough":	(r'~~(.*)~~', r'<strike>\1</strike>'),
 		"superscript":		(r'\^(.+)\^', r'<sup>\1</sup>'),
 		"subscript":		(r',,(.+),,', r'<sub>\1</sub>'),
+		"linebreak":		(r'\[\[BR\]\]', r'<br/>'),
 		"nowiki":			(r'(?<!#)!([\w\S]+)', r'<nowiki>\1</nowiki>')
 			#With a fix for #!
 		}

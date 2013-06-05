@@ -9,12 +9,13 @@ parser.add_argument('--mwiki-user', type=str, help="MediaWiki Username", default
 parser.add_argument('--mwiki-pass', type=str, help="MediaWiki Password", default="")
 parser.add_argument('--mwiki-port', type=int, help="MediaWiki Port, default 80", default=80)	
 parser.add_argument('--trac-path', type=str, help="Trac installation directory", default="/home/trac/trac")
+parser.add_argument('--sqlite-db', type=str, help="Trac source database", default=None)
 parser.add_argument('--prefix', type=str, help="Prefix for pages imported into MediaWiki", default="")
 
 args = parser.parse_args()
 
 import mwclient
-from trac.env import Environment
+
 
 #Init mwclient
 mwsite = mwclient.Site("%s:%s" % (args.mwiki_host, args.mwiki_port),  path=args.mwiki_path)
@@ -25,9 +26,15 @@ if 'edit' not in mwsite.rights:
 if 'createpage' not in mwsite.rights:
 	raise Exception("%(mwiki_user)s does not have page creation permissions on %(mwiki_host)s" % args)
 	
-tracenv = Environment(args.trac_path)
-tracdb = tracenv.get_db_cnx()
-traccur = tracdb.cursor()
+if args.sqlite_db is not None:
+	import sqlite3
+	sqliteconn = sqlite3.connect(args.sqlite_db)
+	traccur = sqliteconn.cursor()
+elif args.trac_path is not None:
+	from trac.env import Environment	
+	tracenv = Environment(args.trac_path)
+	tracdb = tracenv.get_db_cnx()
+	traccur = tracdb.cursor()
 
 if args.prefix != "":
 	args.prefix = "%s - " % args.prefix

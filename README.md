@@ -8,6 +8,7 @@ WORKING
   * Basic import of wiki pages
   * Revision support (lol, that was easy)
   * Most formatting works, the only thing left is Links (these might be a couple regex, but there will be a lot of special cases to consider
+  * Added support for direct sqlite DB from trac
   
 TODO
 ----

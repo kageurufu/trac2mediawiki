@@ -9,8 +9,8 @@ class WikiFormatter:
 		"monospace_end":	(r'\}\}\}', r'</pre>'),
 		"underline":		(r'\_\_(.*)\_\_', r'<ul>\1</ul>'),
 		"strikethrough":	(r'~~(.*)~~', r'<strike>\1</strike>'),
-		"superscript":		(r'\^(.+)\^', r'<sup>\1</sup>'),
-		"subscript":		(r',,(.+),,', r'<sub>\1</sub>'),
+		"superscript":		(r'\^([\w\S]+)\^', r'<sup>\1</sup>'),
+		"subscript":		(r',,([\w\S]+),,', r'<sub>\1</sub>'),
 		"linebreak":		(r'\[\[BR\]\]', r'<br/>'),
 		"nowiki":			(r'(?<!#)!([\w\S]+)', r'<nowiki>\1</nowiki>')
 			#With a fix for #!
@@ -20,12 +20,12 @@ class WikiFormatter:
 		self.text = input_text.replace('\r\n', '\n') #Strip windows \r\n into \n
 
 	def parse(self):
-		for name, regex in self.regex.iteritems():
-			self.text = re.sub(regex[0], regex[1], self.text)
 		self.parseUnorderedLists()
 		self.parseNumberedLists()
 		self.parseTables()
 		self.parseLinks()
+		for name, regex in self.regex.iteritems():
+			self.text = re.sub(regex[0], regex[1], self.text)
 		return self.text
 
 	def parseLinks(self):
@@ -113,7 +113,7 @@ class WikiFormatter:
 			if line.startswith("||"):
 				if not inTable: #Start a new table
 					inTable = True
-					output += "\n{|"
+					output += "\n{| class=\"wikitable\""
 				else:
 					output += "\n|-"
 				row = line.split("||")[1:-1]
@@ -146,7 +146,5 @@ if __name__ == '__main__':
 
 	formatter = WikiFormatter(input_text)
 	formatter.parseDefinitions()
-	print(formatter.text)
-	#print(formatter.parseNumberedLists())
-	#print(formatter.parse(), file=output)
+	print(formatter.parse(), file=output)
 

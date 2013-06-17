@@ -110,7 +110,7 @@ class WikiFormatter:
 		output = ""
 		inTable = False
 		for line in self.text.split('\n'):
-			if line.startswith("||"):
+			if line.strip().startswith("||"):
 				if not inTable: #Start a new table
 					inTable = True
 					output += "\n{| class=\"wikitable\""
